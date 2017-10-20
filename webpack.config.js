@@ -9,7 +9,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ENV = process.env.npm_lifecycle_event;
 const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
-
 const devTool = isProd ? 'source-map' : 'inline-source-map'
 
 module.exports = function makeWebpackConfig() {

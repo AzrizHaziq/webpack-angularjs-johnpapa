@@ -2,7 +2,7 @@ import 'angular-ui-router'
 
 AppRoutes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-function AppRoutes($stateProvider, $urlRouterProvider){
+export default function AppRoutes($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
 
@@ -18,5 +18,3 @@ function AppRoutes($stateProvider, $urlRouterProvider){
             template: '<h3>Its the UI-Router hello world app!</h3>'
         });
 }
-
-export default AppRoutes;

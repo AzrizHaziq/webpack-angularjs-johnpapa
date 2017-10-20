@@ -1,13 +1,7 @@
-AppCtrl.$inject = [
-  'SAVI'
-];
+AppCtrl.$inject = ['']
 
-function AppCtrl(SAVI){
+export default function AppCtrl() {
     let vm = this;
 
     vm.asdasd = 'asdasd';
-
-    console.log(SAVI, this);
 }
-
-export default AppCtrl;
