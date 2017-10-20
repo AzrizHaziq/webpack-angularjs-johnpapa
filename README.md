@@ -1,8 +1,8 @@
 # angularjs-webpack
 
 [![Dependency Status](https://david-dm.org/preboot/angularjs-webpack/status.svg)](https://david-dm.org/preboot/angular-webpack#info=dependencies) [![devDependency Status](https://david-dm.org/preboot/angularjs-webpack/dev-status.svg)](https://david-dm.org/preboot/angularjs-webpack#info=devDependencies)
-[![Doc](https://azrizhaziq.github.io/webpack-angularjs-johnpapa/)
 
+[Official Doc coming soon, i hope](https://azrizhaziq.github.io/webpack-angularjs-johnpapa/)
 A complete, yet simple, starter for Angular using Webpack.
 
 This workflow serves as a starting point for building Angular 1.x applications using Webpack 2.x. Should be noted that apart from the pre-installed angular package, this workflow is pretty much generic.
