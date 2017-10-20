@@ -11,23 +11,26 @@ const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
 const devTool = isProd ? 'source-map' : 'inline-source-map'
 
-module.exports = function makeWebpackConfig() {
-    const config = {};
+const plugins = []
+const modules = []
 
-    config.entry = isTest ? void 0 : {
+!isTest && initDefaultScript()
+isProd && initProdScript()
+isTest && initTestScript()
+
+module.exports = {
+    entry : isTest ? void 0 : {
         app: './src/app/app-core/app.js'
-    };
+    },
 
-    config.output = isTest ? {} : {
+    output : isTest ? {} : {
         path: __dirname + '/dist',
         publicPath: isProd ? '/' : 'http://localhost:4300/',
         filename: isProd ? '[name].[hash].js' : '[name].bundle.js',
         chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js'
-    };
+    },
 
-    config.devtool = devTool;
-
-    config.module = {
+    module : {
         rules: [
             {
                 test: /\.js$/,
@@ -51,31 +54,12 @@ module.exports = function makeWebpackConfig() {
             {
                 test: /\.html$/,
                 loader: 'raw-loader'
-            }
+            },
+            ...modules
         ]
-    };
+    },
 
-    if (isTest) {
-        config.module.rules.push({
-            enforce: 'pre',
-            test: /\.js$/,
-            exclude: [
-                /node_modules/,
-                /\.spec\.js$/
-            ],
-            loader: 'istanbul-instrumenter-loader',
-            query: {
-                esModules: true
-            }
-        })
-    }
-
-    /**
-     * Plugins
-     * Reference: http://webpack.github.io/docs/configuration.html#plugins
-     * List: http://webpack.github.io/docs/list-of-plugins.html
-     */
-    config.plugins = [
+    plugins : [
         new webpack.LoaderOptionsPlugin({
             test: /\.scss$/i,
             options: {
@@ -88,38 +72,53 @@ module.exports = function makeWebpackConfig() {
             PRODUCTION: JSON.stringify(isProd),
             VERSION: JSON.stringify("5fa3b9"),
             APP: JSON.stringify({ ENV })
-        })
-    ];
+        }),
+        ...plugins
+    ],
 
-    if (!isTest) {
-        config.plugins.push(
-            new HtmlWebpackPlugin({
-                template: './src/public/index.html',
-                inject: 'body'
-            }),
-            new ExtractTextPlugin({filename: 'css/[name].css', disable: !isProd, allChunks: true})
-        )
-    }
+    devtool : devTool,
 
-    if (isProd) {
-        config.plugins.push(
-            new webpack.NoErrorsPlugin(),
-            new webpack.optimize.DedupePlugin(),
-            new webpack.optimize.UglifyJsPlugin(),
-            new CopyWebpackPlugin([{
-                from: __dirname + '/src/public'
-            }])
-        )
-    }
-
-    config.devServer = {
+    devServer : {
         contentBase: './src/public',
         stats: 'minimal'
-    };
+    },
 
-    config.resolve = {
+    resolve : {
         modules : ['node_modules', './src/app/']
     }
+};
 
-    return config;
-}();
+function initDefaultScript(){
+    plugins.push(
+        new HtmlWebpackPlugin({
+            template: './src/public/index.html',
+            inject: 'body'
+        }),
+        new ExtractTextPlugin({filename: 'css/[name].css', disable: !isProd, allChunks: true})
+    )
+}
+
+function initTestScript(){
+    modules.rules.push({
+        enforce: 'pre',
+        test: /\.js$/,
+        exclude: [
+            /node_modules/,
+            /\.spec\.js$/
+        ],
+        loader: 'istanbul-instrumenter-loader',
+        query: {
+            esModules: true
+        }
+    })
+}
+
+function initProdScript(){
+    plugins.push(
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
+        new CopyWebpackPlugin([{
+            from: __dirname + '/src/public'
+        }])
+    )
+}
