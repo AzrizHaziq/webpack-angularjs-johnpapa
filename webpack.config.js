@@ -84,7 +84,10 @@ module.exports = {
     },
 
     resolve : {
-        modules : ['node_modules', './src/app/']
+        //alias: {
+        //    Services : path.resolve(__dirname, '.src/app/services/'),
+        //},
+        modules: ["node_modules"]
     }
 };
 

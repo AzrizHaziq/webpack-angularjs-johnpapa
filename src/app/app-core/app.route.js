@@ -4,7 +4,7 @@ AppRoutes.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 export default function AppRoutes($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/');
+    //$urlRouterProvider.otherwise('/');
 
     $stateProvider
         .state({
