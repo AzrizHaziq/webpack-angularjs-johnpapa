@@ -1,4 +1,4 @@
-import app from './app-core/app';
+import app from './app';
 
 describe('app', () => {
 

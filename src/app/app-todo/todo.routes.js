@@ -1,18 +1,13 @@
 import 'angular-ui-router'
 
-TodoRoutes.$inject = ['$stateProvider', '$urlRouterProvider'];
+TodoRoutes.$inject = ['$stateProvider'];
 
-export default function TodoRoutes($stateProvider, $urlRouterProvider) {
+export default function TodoRoutes($stateProvider) {
 
     $stateProvider
-        .state({
-            name : 'abc',
-            url : '/abc',
-            template : '<h3>abc</h3>'
-        })
-        .state({
-            name : 'dev',
-            url : '/dev',
-            template : '<h3>dev</h3>'
+        .state('todo', {
+            url : '/todo',
+            template : require('./html/todo.html'),
+            controller : 'TodoController as todo',
         });
 }

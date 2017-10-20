@@ -20,7 +20,7 @@ isTest && initTestScript()
 
 module.exports = {
     entry : isTest ? void 0 : {
-        app: './src/app/app-core/app.js'
+        app: './src/app/app-c/app.js'
     },
 
     output : isTest ? {} : {
@@ -80,7 +80,7 @@ module.exports = {
 
     devServer : {
         contentBase: './src/public',
-        stats: 'minimal'
+        stats: 'errors-only'
     },
 
     resolve : {
